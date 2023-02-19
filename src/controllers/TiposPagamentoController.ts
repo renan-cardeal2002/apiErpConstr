@@ -15,7 +15,6 @@ class TiposPagamentoController {
 
       let result = await repository.buscarTiposPagamento();
 
-      console.log(result);
       return res.json(result);
     } catch (err) {
       await conexao.end();
