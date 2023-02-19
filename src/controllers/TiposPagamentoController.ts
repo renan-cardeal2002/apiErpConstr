@@ -6,7 +6,6 @@ class TiposPagamentoController {
   public async buscarTiposPagamento(req: Request, res: Response): Promise<Response> {
     try {
       var conexao = await Conexao.connectDb();
-      await conexao.connect();
     } catch (err) {
       return res.status(500);
     }
@@ -15,11 +14,7 @@ class TiposPagamentoController {
       const repository = new TiposPagamentoRepository();
 
       let s_sql = await repository.buscarTiposPagamento();
-      let result;
-
-      try {
-        result = conexao.query(s_sql);
-      } catch {}
+      let result = conexao.query(s_sql);
 
       console.log(result);
       await conexao.end();

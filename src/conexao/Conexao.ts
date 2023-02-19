@@ -8,6 +8,7 @@ class Conexao {
       database: "erpconstr",
     });
 
+    await conn.connect();
     return conn;
   }
 }
