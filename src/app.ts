@@ -1,8 +1,10 @@
 import express from "express";
+import cors from "cors";
 import routes from "./routes";
-
+var mysql = require("mysql");
 class App {
   public express: express.Application;
+  public conn: any;
   public constructor() {
     process.env.TZ = "America";
     this.express = express();
@@ -14,22 +16,16 @@ class App {
 
   private middlewares(): void {
     this.express.use(express.json({ limit: "10MB" }));
+    this.express.use(cors());
   }
 
   private async createConnection() {
-    // this.conn = mysql.createConnection({
-    //   host: "localhost",
-    //   user: "root",
-    //   password: "",
-    //   database: "erpconstr",
-    // });
-    // this.conn.connect((err) => {
-    //   if (err) {
-    //     console.log("Erro connecting to database...", err);
-    //     return;
-    //   }
-    //   console.log("Connection established!");
-    // });
+    this.conn = await mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "",
+      database: "erpconstr",
+    });
   }
 
   private routes(): void {

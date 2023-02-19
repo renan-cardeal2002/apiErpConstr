@@ -5,19 +5,17 @@ import Conexao from "./../conexao/Conexao";
 class TiposPagamentoController {
   public async buscarTiposPagamento(req: Request, res: Response): Promise<Response> {
     try {
-      var conexao = await Conexao.connectDb();
+      var conexao: any = await Conexao.connectDb();
     } catch (err) {
       return res.status(500);
     }
     try {
       const requisicao = req.query;
-      const repository = new TiposPagamentoRepository();
+      const repository = new TiposPagamentoRepository(conexao);
 
-      let s_sql = await repository.buscarTiposPagamento();
-      let result = conexao.query(s_sql);
+      let result = await repository.buscarTiposPagamento();
 
       console.log(result);
-      await conexao.end();
       return res.json(result);
     } catch (err) {
       await conexao.end();
