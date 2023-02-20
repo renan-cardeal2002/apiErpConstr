@@ -12,4 +12,17 @@ export class UsuarioRepository {
       });
     });
   }
+  async login(login: string, senha: string) {
+    let s_sql = `
+    select count(1) "temUser"
+      from tbcogusuario
+     where login = '${login}'
+       and senha = '${senha}'`;
+
+    return new Promise((resolve, reject) => {
+      this.conn.query(s_sql, (err, rows) => {
+        err ? reject(err) : resolve(rows);
+      });
+    });
+  }
 }

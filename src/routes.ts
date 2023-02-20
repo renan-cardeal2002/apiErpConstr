@@ -5,11 +5,15 @@ import UsuarioController from "./controllers/UsuarioController";
 
 const routes = Router();
 
+routes.get("/cog/login", UsuarioController.login);
+routes.get("/cog/buscarUsuarios", UsuarioController.buscarUsuarios);
+
 routes.get("/cog/buscarTiposPagamento", TiposPagamentoController.buscarTiposPagamento);
 routes.post("/cog/salvarTiposPagamento", TiposPagamentoController.salvarTiposPagamento);
 routes.delete("/cog/excluirTiposPagamento", TiposPagamentoController.excluirTiposPagamento);
 
 routes.get("/cog/buscarEquipes", EquipeController.buscarEquipes);
-routes.get("/cog/buscarUsuarios", UsuarioController.buscarUsuarios);
+routes.post("/cog/salvarEquipe", EquipeController.salvarEquipe);
+routes.delete("/cog/excluirEquipe", EquipeController.excluirEquipe);
 
 export default routes;
