@@ -2,6 +2,7 @@ import { Router } from "express";
 import EmpresaController from "./controllers/EmpresaController";
 import EquipeController from "./controllers/EquipeController";
 import PessoaController from "./controllers/PessoaController";
+import ProdutoController from "./controllers/ProdutoController";
 import TiposPagamentoController from "./controllers/TiposPagamentoController";
 import UsuarioAplicacaoController from "./controllers/UsuarioAplicacaoController";
 import UsuarioController from "./controllers/UsuarioController";
@@ -34,5 +35,9 @@ routes.delete("/cog/excluirEmpresa", EmpresaController.excluirEmpresa);
 routes.get("/cog/buscarPessoas", PessoaController.buscarPessoas);
 routes.post("/cog/salvarPessoa", PessoaController.salvarPessoa);
 routes.delete("/cog/excluirPessoa", PessoaController.excluirPessoa);
+
+routes.get("/cog/buscarProdutos", ProdutoController.buscarProdutos);
+routes.post("/cog/salvarProduto", ProdutoController.salvarProduto);
+routes.delete("/cog/excluirProduto", ProdutoController.excluirProduto);
 
 export default routes;
