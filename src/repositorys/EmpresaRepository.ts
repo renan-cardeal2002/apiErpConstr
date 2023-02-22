@@ -27,17 +27,22 @@ export class EmpresaRepository {
           , cnpj_cpf
           , tipo_pessoa
           , inscricao_estadual
-          , incricao_municipal
-        )
-    values
-        (
-            '${nome}'
-          , '${cnpjCpf}'
-          , '${tipoPessoa}'
-          , '${inscricaoEstadual}
-          , '${inscricaoMunicipal}'
+          , inscricao_municipal
         )`;
 
+    s_sql =
+      s_sql +
+      `
+    values
+    (
+        '${nome}'
+      , '${cnpjCpf}'
+      , '${tipoPessoa}'
+      , '${inscricaoEstadual}'
+      , '${inscricaoMunicipal}'
+    )`;
+
+    console.log(s_sql);
     return new Promise((resolve, reject) => {
       this.conn.query(s_sql, (err, rows) => {
         err ? reject(err) : resolve(rows);
