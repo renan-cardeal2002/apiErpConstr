@@ -8,8 +8,11 @@ import UsuarioController from "./controllers/UsuarioController";
 const routes = Router();
 
 routes.get("/cog/login", UsuarioController.login);
+
 routes.get("/cog/buscarUsuarios", UsuarioController.buscarUsuarios);
 routes.get("/cog/buscarEmpresasUsuario", UsuarioController.buscarEmpresasUsuario);
+routes.post("/cog/salvarUsuario", UsuarioController.salvarUsuario);
+routes.delete("/cog/excluirUsuario", UsuarioController.excluirUsuario);
 
 routes.get("/cog/buscarTiposPagamento", TiposPagamentoController.buscarTiposPagamento);
 routes.post("/cog/salvarTiposPagamento", TiposPagamentoController.salvarTiposPagamento);

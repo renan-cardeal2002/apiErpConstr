@@ -39,4 +39,48 @@ export class UsuarioRepository {
       });
     });
   }
+
+  async inserirUsuario(login: string, senha: string) {
+    let s_sql = `
+    insert into tbcogusuario
+      (
+        login
+      , senha
+      )
+    values
+      (
+        '${login}'
+      , '${senha}'
+      )`;
+
+    return new Promise((resolve, reject) => {
+      this.conn.query(s_sql, (err, rows) => {
+        err ? reject(err) : resolve(rows);
+      });
+    });
+  }
+  async alterarUsuario(idUsuario: number, login: string, senha: string) {
+    let s_sql = `
+    update tbcogusuario
+       set login = '${login}'
+         , senha = '${senha}'
+     where id_usuario = ${idUsuario}`;
+
+    return new Promise((resolve, reject) => {
+      this.conn.query(s_sql, (err, rows) => {
+        err ? reject(err) : resolve(rows);
+      });
+    });
+  }
+  async excluirUsuario(idUsuario: number) {
+    let s_sql = `
+    delete from tbcogusuario
+     where id_usuario = ${idUsuario}`;
+
+    return new Promise((resolve, reject) => {
+      this.conn.query(s_sql, (err, rows) => {
+        err ? reject(err) : resolve(rows);
+      });
+    });
+  }
 }

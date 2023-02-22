@@ -65,5 +65,50 @@ class UsuarioController {
       return res.json(500);
     }
   }
+  public async salvarUsuario(req: Request, res: Response): Promise<Response> {
+    try {
+      var conexao: any = await Conexao.connectDb();
+    } catch (err) {
+      return res.status(500);
+    }
+    try {
+      const requisicao = req.body;
+      const repository = new UsuarioRepository(conexao);
+
+      let idUsuario = requisicao.idUsuario;
+      let login = requisicao.login;
+      let senha = requisicao.senha;
+      let tipoInclusao = requisicao.tipoInclusao;
+
+      if (tipoInclusao == "I") {
+        await repository.inserirUsuario(login, senha);
+      } else if (tipoInclusao == "E") {
+        await repository.alterarUsuario(idUsuario, login, senha);
+      }
+
+      return res.json("ok");
+    } catch (err) {
+      return res.json(500);
+    }
+  }
+  public async excluirUsuario(req: Request, res: Response): Promise<Response> {
+    try {
+      var conexao: any = await Conexao.connectDb();
+    } catch (err) {
+      return res.status(500);
+    }
+    try {
+      const requisicao = req.query;
+      const repository = new UsuarioRepository(conexao);
+
+      let idUsuario = parseInt(requisicao.idUsuario as string);
+
+      await repository.excluirUsuario(idUsuario);
+
+      return res.json("ok");
+    } catch (err) {
+      return res.json(500);
+    }
+  }
 }
 export default new UsuarioController();
