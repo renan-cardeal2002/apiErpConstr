@@ -3,6 +3,20 @@ export class UsuarioRepository {
   constructor(conexao) {
     this.conn = conexao;
   }
+  async login(login: string, senha: string) {
+    let s_sql = `
+    select count(1) "temUser", id_usuario "idUsuario"
+      from tbcogusuario
+     where login = '${login}'
+       and senha = '${senha}'
+     group by id_usuario`;
+
+    return new Promise((resolve, reject) => {
+      this.conn.query(s_sql, (err, rows) => {
+        err ? reject(err) : resolve(rows);
+      });
+    });
+  }
   async buscarUsuarios() {
     let s_sql = `select id_usuario "idUsuario", login "login", senha "senha"  from tbcogusuario`;
 
@@ -12,12 +26,12 @@ export class UsuarioRepository {
       });
     });
   }
-  async login(login: string, senha: string) {
+  async buscarEmpresasUsuario(idUsuario: number) {
     let s_sql = `
-    select count(1) "temUser"
-      from tbcogusuario
-     where login = '${login}'
-       and senha = '${senha}'`;
+    select a.id_usuario "idUsuario", a.id_empresa "idEmpresa", b.nome "nome"
+      from tbcogusuario_empresa a, tbcogempresa b
+     where a.id_usuario = ${idUsuario}
+       and b.id_empresa = a.id_empresa`;
 
     return new Promise((resolve, reject) => {
       this.conn.query(s_sql, (err, rows) => {

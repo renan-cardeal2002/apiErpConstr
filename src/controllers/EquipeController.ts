@@ -12,9 +12,10 @@ class EquipeController {
     try {
       const requisicao = req.query;
       const repository = new EquipeRepository(conexao);
+      let idEmpresa = parseInt(requisicao.idEmpresa as string);
 
-      let result = await repository.buscarEquipes();
-      console.log(result);
+      let result = await repository.buscarEquipes(idEmpresa);
+
       return res.json(result);
     } catch (err) {
       return res.json(500);
@@ -29,15 +30,16 @@ class EquipeController {
     try {
       const requisicao = req.body;
       const repository = new EquipeRepository(conexao);
+      let idEmpresa = parseInt(requisicao.idEmpresa as string);
 
       let tipoInclusao = requisicao.tipoInclusao;
       let nome = requisicao.nome;
       let idEquipe = requisicao.idEquipe;
 
       if (tipoInclusao == "I") {
-        await repository.inserirEquipe(nome);
+        await repository.inserirEquipe(idEmpresa, nome);
       } else if (tipoInclusao == "E") {
-        await repository.alterarEquipe(idEquipe, nome);
+        await repository.alterarEquipe(idEmpresa, idEquipe, nome);
       }
 
       return res.json("ok");
@@ -55,9 +57,10 @@ class EquipeController {
       const requisicao = req.query;
       const repository = new EquipeRepository(conexao);
 
+      let idEmpresa = parseInt(requisicao.idEmpresa as string);
       let idEquipe = parseInt(requisicao.idEquipe as string);
 
-      await repository.excluirEquipe(idEquipe);
+      await repository.excluirEquipe(idEmpresa, idEquipe);
 
       return res.json("ok");
     } catch (err) {
