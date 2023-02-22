@@ -13,6 +13,8 @@ routes.get("/cog/buscarUsuarios", UsuarioController.buscarUsuarios);
 routes.get("/cog/buscarEmpresasUsuario", UsuarioController.buscarEmpresasUsuario);
 routes.post("/cog/salvarUsuario", UsuarioController.salvarUsuario);
 routes.delete("/cog/excluirUsuario", UsuarioController.excluirUsuario);
+routes.post("/cog/salvarEmpresaUsuario", UsuarioController.salvarEmpresaUsuario);
+routes.delete("/cog/excluirEmpresaUsuario", UsuarioController.excluirEmpresaUsuario);
 
 routes.get("/cog/buscarTiposPagamento", TiposPagamentoController.buscarTiposPagamento);
 routes.post("/cog/salvarTiposPagamento", TiposPagamentoController.salvarTiposPagamento);

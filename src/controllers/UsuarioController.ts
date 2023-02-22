@@ -110,5 +110,46 @@ class UsuarioController {
       return res.json(500);
     }
   }
+
+  public async salvarEmpresaUsuario(req: Request, res: Response): Promise<Response> {
+    try {
+      var conexao: any = await Conexao.connectDb();
+    } catch (err) {
+      return res.status(500);
+    }
+    try {
+      const requisicao = req.body;
+      const repository = new UsuarioRepository(conexao);
+
+      let idUsuario = requisicao.idUsuario;
+      let idEmpresa = requisicao.idEmpresa;
+
+      console.log(requisicao);
+      await repository.inserirEmpresaUsuario(idUsuario, idEmpresa);
+
+      return res.json("ok");
+    } catch (err) {
+      return res.json(500);
+    }
+  }
+  public async excluirEmpresaUsuario(req: Request, res: Response): Promise<Response> {
+    try {
+      var conexao: any = await Conexao.connectDb();
+    } catch (err) {
+      return res.status(500);
+    }
+    try {
+      const requisicao = req.query;
+      const repository = new UsuarioRepository(conexao);
+
+      let idUsuarioEmpresa = parseInt(requisicao.idUsuarioEmpresa as string);
+
+      await repository.excluirEmpresaUsuario(idUsuarioEmpresa);
+
+      return res.json("ok");
+    } catch (err) {
+      return res.json(500);
+    }
+  }
 }
 export default new UsuarioController();

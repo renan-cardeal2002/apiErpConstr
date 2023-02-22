@@ -28,7 +28,10 @@ export class UsuarioRepository {
   }
   async buscarEmpresasUsuario(idUsuario: number) {
     let s_sql = `
-    select a.id_usuario "idUsuario", a.id_empresa "idEmpresa", b.nome "nome"
+    select a.id_usuario_empresa "idUsuarioEmpresa"
+         , a.id_usuario "idUsuario"
+         , a.id_empresa "idEmpresa"
+         , b.nome "nome"
       from tbcogusuario_empresa a, tbcogempresa b
      where a.id_usuario = ${idUsuario}
        and b.id_empresa = a.id_empresa`;
@@ -76,6 +79,37 @@ export class UsuarioRepository {
     let s_sql = `
     delete from tbcogusuario
      where id_usuario = ${idUsuario}`;
+
+    return new Promise((resolve, reject) => {
+      this.conn.query(s_sql, (err, rows) => {
+        err ? reject(err) : resolve(rows);
+      });
+    });
+  }
+
+  async inserirEmpresaUsuario(idUsuario: string, idEmpresa: string) {
+    let s_sql = `
+    insert into tbcogusuario_empresa
+      (
+        id_usuario
+      , id_empresa
+      )
+    values
+      (
+        '${idUsuario}'
+      , '${idEmpresa}'
+      )`;
+
+    return new Promise((resolve, reject) => {
+      this.conn.query(s_sql, (err, rows) => {
+        err ? reject(err) : resolve(rows);
+      });
+    });
+  }
+  async excluirEmpresaUsuario(idUsuarioEmpresa: number) {
+    let s_sql = `
+    delete from tbcogusuario_empresa
+     where id_usuario_empresa = ${idUsuarioEmpresa}`;
 
     return new Promise((resolve, reject) => {
       this.conn.query(s_sql, (err, rows) => {

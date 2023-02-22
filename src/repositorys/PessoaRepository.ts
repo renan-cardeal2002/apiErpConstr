@@ -28,29 +28,29 @@ export class PessoaRepository {
     let s_sql = `
     insert into tbcogpessoa
         (
-          , id_empresa
-          , nome
-          , cnpj_cpf
-          , tipo_pessoa
-          , situacao
-          , funcionario
-          , cliente
-          , fornecedor
-          , tipo_funcionario
-          , id_equipe
+          id_empresa
+        , nome
+        , cnpj_cpf
+        , tipo_pessoa
+        , situacao
+        /*, funcionario
+        , cliente
+        , fornecedor
+        , tipo_funcionario
+        , id_equipe*/
         )
     values
         (
-          , ${idEmpresa}
-          , '${nome}'
-          , '${cnpjCpf}'
-          , '${tipoPessoa}'
-          , '${situacao}'
-          , '${funcionario}
-          , '${cliente}'
-          , '${fornecedor}'
-          , '${tipoFuncionario}'
-          , ${idEquipe}
+          ${idEmpresa}
+        , '${nome}'
+        , '${cnpjCpf}'
+        , '${tipoPessoa}'
+        , '${situacao}'
+        /*, '${funcionario}
+        , '${cliente}'
+        , '${fornecedor}'
+        , '${tipoFuncionario}'
+        , ${idEquipe}*/
         )`;
 
     return new Promise((resolve, reject) => {
