@@ -5,11 +5,11 @@ export class UsuarioRepository {
   }
   async login(login: string, senha: string) {
     let s_sql = `
-    select count(1) "temUser", id_usuario "idUsuario"
+    select count(1) "temUser", id_usuario "idUsuario", login "login"
       from tbcogusuario
      where login = '${login}'
        and senha = '${senha}'
-     group by id_usuario`;
+     group by id_usuario, login`;
 
     return new Promise((resolve, reject) => {
       this.conn.query(s_sql, (err, rows) => {
