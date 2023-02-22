@@ -3,6 +3,7 @@ import EmpresaController from "./controllers/EmpresaController";
 import EquipeController from "./controllers/EquipeController";
 import PessoaController from "./controllers/PessoaController";
 import TiposPagamentoController from "./controllers/TiposPagamentoController";
+import UsuarioAplicacaoController from "./controllers/UsuarioAplicacaoController";
 import UsuarioController from "./controllers/UsuarioController";
 
 const routes = Router();
@@ -15,6 +16,8 @@ routes.post("/cog/salvarUsuario", UsuarioController.salvarUsuario);
 routes.delete("/cog/excluirUsuario", UsuarioController.excluirUsuario);
 routes.post("/cog/salvarEmpresaUsuario", UsuarioController.salvarEmpresaUsuario);
 routes.delete("/cog/excluirEmpresaUsuario", UsuarioController.excluirEmpresaUsuario);
+
+routes.get("/cog/buscarAplicacoesUsuario", UsuarioAplicacaoController.buscarAplicacoesUsuario);
 
 routes.get("/cog/buscarTiposPagamento", TiposPagamentoController.buscarTiposPagamento);
 routes.post("/cog/salvarTiposPagamento", TiposPagamentoController.salvarTiposPagamento);
