@@ -1,6 +1,7 @@
 import { Router } from "express";
 import EmpresaController from "./controllers/EmpresaController";
 import EquipeController from "./controllers/EquipeController";
+import MySqlController from "./controllers/MySqlController";
 import PessoaController from "./controllers/PessoaController";
 import ProdutoController from "./controllers/ProdutoController";
 import TiposPagamentoController from "./controllers/TiposPagamentoController";
@@ -11,14 +12,19 @@ const routes = Router();
 
 routes.get("/cog/login", UsuarioController.login);
 
+routes.post("/cog/buscarScript", MySqlController.buscarScript);
+
 routes.get("/cog/buscarUsuarios", UsuarioController.buscarUsuarios);
-routes.get("/cog/buscarEmpresasUsuario", UsuarioController.buscarEmpresasUsuario);
 routes.post("/cog/salvarUsuario", UsuarioController.salvarUsuario);
 routes.delete("/cog/excluirUsuario", UsuarioController.excluirUsuario);
+
+routes.get("/cog/buscarEmpresasUsuario", UsuarioController.buscarEmpresasUsuario);
 routes.post("/cog/salvarEmpresaUsuario", UsuarioController.salvarEmpresaUsuario);
 routes.delete("/cog/excluirEmpresaUsuario", UsuarioController.excluirEmpresaUsuario);
 
 routes.get("/cog/buscarAplicacoesUsuario", UsuarioAplicacaoController.buscarAplicacoesUsuario);
+routes.post("/cog/salvarAplicacaoUsuario", UsuarioAplicacaoController.salvarAplicacaoUsuario);
+routes.delete("/cog/excluirAplicacaoUsuario", UsuarioAplicacaoController.excluirAplicacaoUsuario);
 
 routes.get("/cog/buscarTiposPagamento", TiposPagamentoController.buscarTiposPagamento);
 routes.post("/cog/salvarTiposPagamento", TiposPagamentoController.salvarTiposPagamento);
