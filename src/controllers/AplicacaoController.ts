@@ -30,8 +30,17 @@ class AplicacaoController {
       const requisicao = req.body;
       const repository = new AplicacaoRepository(conexao);
 
-      console.log(requisicao);
-      await repository.inserirAplicacao();
+      let tipoInclusao = requisicao.tipoInclusao;
+      let idAplicacao = requisicao.idAplicacao;
+      let idSistema = requisicao.idSistema;
+      let nomeAplicativo = requisicao.nomeAplicativo;
+      let situacao = requisicao.situacao;
+
+      if (tipoInclusao == "I") {
+        await repository.inserirAplicacao(idAplicacao, idSistema, nomeAplicativo, situacao);
+      } else if (tipoInclusao == "E") {
+        await repository.alterarAplicacao(idAplicacao, idSistema, nomeAplicativo, situacao);
+      }
 
       return res.json("ok");
     } catch (err) {
@@ -48,7 +57,9 @@ class AplicacaoController {
       const requisicao = req.query;
       const repository = new AplicacaoRepository(conexao);
 
-      await repository.excluirAplicacao();
+      let idAplicacao = requisicao.idAplicacao as string;
+
+      await repository.excluirAplicacao(idAplicacao);
 
       return res.json("ok");
     } catch (err) {

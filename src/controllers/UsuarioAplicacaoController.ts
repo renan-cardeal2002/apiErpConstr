@@ -16,6 +16,7 @@ class UsuarioAplicacaoController {
       let idUsuario = parseInt(requisicao.idUsuario as string);
 
       let result = await repository.buscarAplicacoesUsuario(idUsuario);
+      console.log(result);
 
       return res.json(result);
     } catch (err) {

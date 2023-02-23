@@ -6,7 +6,9 @@ export class UsuarioAplicacaoRepository {
 
   async buscarAplicacoesUsuario(idUsuario: number) {
     let s_sql = `
-    select a.id_aplicacao "idAplicacao"
+    select a.id_usuario "idUsuario"
+         , a.id_usuario_aplicacao "idUsuarioAplicacao"
+         , a.id_aplicacao "idAplicacao"
          , b.id_sistema "idSistema"
          , b.nome_aplicativo "nomeAplicativo"
          , b.situacao "situacao"

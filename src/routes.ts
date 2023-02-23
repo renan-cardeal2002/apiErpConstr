@@ -1,4 +1,5 @@
 import { Router } from "express";
+import AplicacaoController from "./controllers/AplicacaoController";
 import EmpresaController from "./controllers/EmpresaController";
 import EquipeController from "./controllers/EquipeController";
 import MySqlController from "./controllers/MySqlController";
@@ -21,6 +22,10 @@ routes.delete("/cog/excluirUsuario", UsuarioController.excluirUsuario);
 routes.get("/cog/buscarEmpresasUsuario", UsuarioController.buscarEmpresasUsuario);
 routes.post("/cog/salvarEmpresaUsuario", UsuarioController.salvarEmpresaUsuario);
 routes.delete("/cog/excluirEmpresaUsuario", UsuarioController.excluirEmpresaUsuario);
+
+routes.get("/cog/buscarAplicacoes", AplicacaoController.buscarAplicacoes);
+routes.post("/cog/salvarAplicacao", AplicacaoController.salvarAplicacao);
+routes.delete("/cog/excluirAplicacao", AplicacaoController.excluirAplicacao);
 
 routes.get("/cog/buscarAplicacoesUsuario", UsuarioAplicacaoController.buscarAplicacoesUsuario);
 routes.post("/cog/salvarAplicacaoUsuario", UsuarioAplicacaoController.salvarAplicacaoUsuario);
