@@ -10,7 +10,6 @@ export class AplicacaoRepository {
          , id_sistema "idSistema"
          , nome_aplicativo "nomeAplicativo"
          , situacao "situacao"
-         , favorito "favorito"
       from tbcogaplicacao
      where situacao = 'A'`;
 

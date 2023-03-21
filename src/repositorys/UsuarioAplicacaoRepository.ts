@@ -9,10 +9,10 @@ export class UsuarioAplicacaoRepository {
     select a.id_usuario "idUsuario"
          , a.id_usuario_aplicacao "idUsuarioAplicacao"
          , a.id_aplicacao "idAplicacao"
+         , a.favorito "favorito"
          , b.id_sistema "idSistema"
          , b.nome_aplicativo "nomeAplicativo"
          , b.situacao "situacao"
-         , b.favorito "favorito"
       from tbcogusuario_aplicacao a, tbcogaplicacao b
      where a.id_usuario = ${idUsuario}
        and b.id_aplicacao = a.id_aplicacao

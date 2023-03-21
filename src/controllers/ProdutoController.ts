@@ -13,7 +13,9 @@ class ProdutoController {
       const requisicao = req.query;
       const repository = new ProdutoRepository(conexao);
 
-      let result = await repository.buscarProdutos();
+      let idEmpresa = parseInt(requisicao.idEmpresa as string);
+
+      let result = await repository.buscarProdutos(idEmpresa);
 
       return res.json(result);
     } catch (err) {
@@ -31,11 +33,15 @@ class ProdutoController {
       const repository = new ProdutoRepository(conexao);
 
       let tipoInclusao = requisicao.tipoInclusao;
+      let idProduto = requisicao.idProduto;
+      let idEmpresa = requisicao.idEmpresa;
+      let descricao = requisicao.descricao;
+      let situacao = requisicao.situacao;
 
       if (tipoInclusao == "I") {
-        await repository.inserirProduto();
+        await repository.inserirProduto(idEmpresa, descricao, situacao);
       } else if (tipoInclusao == "E") {
-        await repository.alterarProduto();
+        await repository.alterarProduto(idProduto, idEmpresa, descricao, situacao);
       }
 
       return res.json("ok");
@@ -54,8 +60,10 @@ class ProdutoController {
       const repository = new ProdutoRepository(conexao);
 
       let idProduto = parseInt(requisicao.idProduto as string);
+      let idEmpresa = parseInt(requisicao.idEmpresa as string);
 
-      await repository.excluirProduto(idProduto);
+      console.log(requisicao);
+      await repository.excluirProduto(idProduto, idEmpresa);
 
       return res.json("ok");
     } catch (err) {
