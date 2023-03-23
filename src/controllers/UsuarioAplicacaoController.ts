@@ -55,7 +55,6 @@ class UsuarioAplicacaoController {
       const repository = new UsuarioAplicacaoRepository(conexao);
 
       let idUsuarioAplicacao = parseInt(requisicao.idUsuarioAplicacao as string);
-      let idEmpresa = parseInt(requisicao.idEmpresa as string);
 
       await repository.excluirAplicacaoUsuario(idUsuarioAplicacao);
 

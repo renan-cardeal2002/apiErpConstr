@@ -124,7 +124,6 @@ class UsuarioController {
       let idUsuario = requisicao.idUsuario;
       let idEmpresa = requisicao.idEmpresa;
 
-      console.log(requisicao);
       await repository.inserirEmpresaUsuario(idUsuario, idEmpresa);
 
       return res.json("ok");

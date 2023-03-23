@@ -42,7 +42,6 @@ export class EmpresaRepository {
       , '${inscricaoMunicipal}'
     )`;
 
-    console.log(s_sql);
     return new Promise((resolve, reject) => {
       this.conn.query(s_sql, (err, rows) => {
         err ? reject(err) : resolve(rows);

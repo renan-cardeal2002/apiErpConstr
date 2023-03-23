@@ -19,7 +19,6 @@ export class UsuarioAplicacaoRepository {
        and a.id_empresa = ${idEmpresa}
        and b.id_aplicacao = a.id_aplicacao
      order by b.id_sistema, a.id_aplicacao`;
-    console.log(idEmpresa);
 
     return new Promise((resolve, reject) => {
       this.conn.query(s_sql, (err, rows) => {

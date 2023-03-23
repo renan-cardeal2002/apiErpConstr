@@ -62,7 +62,6 @@ class ProdutoController {
       let idProduto = parseInt(requisicao.idProduto as string);
       let idEmpresa = parseInt(requisicao.idEmpresa as string);
 
-      console.log(requisicao);
       await repository.excluirProduto(idProduto, idEmpresa);
 
       return res.json("ok");
