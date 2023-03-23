@@ -14,9 +14,9 @@ class UsuarioAplicacaoController {
       const repository = new UsuarioAplicacaoRepository(conexao);
 
       let idUsuario = parseInt(requisicao.idUsuario as string);
+      let idEmpresa = parseInt(requisicao.idEmpresa as string);
 
-      let result = await repository.buscarAplicacoesUsuario(idUsuario);
-      console.log(result);
+      let result = await repository.buscarAplicacoesUsuario(idUsuario, idEmpresa);
 
       return res.json(result);
     } catch (err) {
@@ -34,10 +34,10 @@ class UsuarioAplicacaoController {
       const repository = new UsuarioAplicacaoRepository(conexao);
 
       let idUsuario = requisicao.idUsuario;
+      let idEmpresa = requisicao.idEmpresa;
       let idAplicacao = requisicao.idAplicacao;
 
-      console.log(requisicao);
-      await repository.inserirAplicacaoUsuario(idUsuario, idAplicacao);
+      await repository.inserirAplicacaoUsuario(idUsuario, idEmpresa, idAplicacao);
 
       return res.json("ok");
     } catch (err) {
@@ -55,6 +55,7 @@ class UsuarioAplicacaoController {
       const repository = new UsuarioAplicacaoRepository(conexao);
 
       let idUsuarioAplicacao = parseInt(requisicao.idUsuarioAplicacao as string);
+      let idEmpresa = parseInt(requisicao.idEmpresa as string);
 
       await repository.excluirAplicacaoUsuario(idUsuarioAplicacao);
 
