@@ -10,14 +10,12 @@ class AplicacaoController {
       return res.status(500);
     }
     try {
-      const requisicao = req.query;
       const repository = new AplicacaoRepository(conexao);
-
-      let result = await repository.buscarAplicacoes();
+      const result = await repository.buscarAplicacoes();
 
       return res.json(result);
     } catch (err) {
-      return res.json(500);
+      return res.json(err);
     }
   }
   public async salvarAplicacao(req: Request, res: Response): Promise<Response> {
@@ -27,24 +25,18 @@ class AplicacaoController {
       return res.status(500);
     }
     try {
-      const requisicao = req.body;
+      const { tipoInclusao, idAplicacao, idSistema, nomeAplicativo, situacao } = req.body;
       const repository = new AplicacaoRepository(conexao);
 
-      let tipoInclusao = requisicao.tipoInclusao;
-      let idAplicacao = requisicao.idAplicacao;
-      let idSistema = requisicao.idSistema;
-      let nomeAplicativo = requisicao.nomeAplicativo;
-      let situacao = requisicao.situacao;
-
-      if (tipoInclusao == "I") {
+      if (tipoInclusao === "I") {
         await repository.inserirAplicacao(idAplicacao, idSistema, nomeAplicativo, situacao);
-      } else if (tipoInclusao == "E") {
+      } else if (tipoInclusao === "E") {
         await repository.alterarAplicacao(idAplicacao, idSistema, nomeAplicativo, situacao);
       }
 
       return res.json("ok");
     } catch (err) {
-      return res.json(500);
+      return res.json(err);
     }
   }
   public async excluirAplicacao(req: Request, res: Response): Promise<Response> {
@@ -56,14 +48,12 @@ class AplicacaoController {
     try {
       const requisicao = req.query;
       const repository = new AplicacaoRepository(conexao);
-
-      let idAplicacao = requisicao.idAplicacao as string;
-
+      const idAplicacao = requisicao.idAplicacao as string;
       await repository.excluirAplicacao(idAplicacao);
 
       return res.json("ok");
     } catch (err) {
-      return res.json(500);
+      return res.json(err);
     }
   }
 }

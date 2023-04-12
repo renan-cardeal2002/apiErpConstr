@@ -1,4 +1,8 @@
 import app from "./app";
 
-app.listen(3333, "0.0.0.0");
-console.log("listeng");
+const PORT = 3333;
+const HOST = "0.0.0.0";
+
+app.listen(PORT, HOST, () => {
+  console.log(`Listening port ${PORT}`);
+});

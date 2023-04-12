@@ -10,14 +10,12 @@ class EmpresaController {
       return res.status(500);
     }
     try {
-      const requisicao = req.query;
       const repository = new EmpresaRepository(conexao);
-
-      let result = await repository.buscarEmpresas();
+      const result = await repository.buscarEmpresas();
 
       return res.json(result);
     } catch (err) {
-      return res.json(500);
+      return res.json(err);
     }
   }
   public async salvarEmpresa(req: Request, res: Response): Promise<Response> {
@@ -27,27 +25,18 @@ class EmpresaController {
       return res.status(500);
     }
     try {
-      const requisicao = req.body;
+      const { idEmpresa, tipoInclusao, nome, cnpjCpf, tipoPessoa, inscricaoEstadual, inscricaoMunicipal } = req.body;
       const repository = new EmpresaRepository(conexao);
 
-      let idEmpresa = requisicao.idEmpresa;
-
-      let tipoInclusao = requisicao.tipoInclusao;
-      let nome = requisicao.nome;
-      let cnpjCpf = requisicao.cnpjCpf;
-      let tipoPessoa = requisicao.tipoPessoa;
-      let inscricaoEstadual = requisicao.inscricaoEstadual;
-      let inscricaoMunicipal = requisicao.inscricaoMunicipal;
-
-      if (tipoInclusao == "I") {
+      if (tipoInclusao === "I") {
         await repository.inserirEmpresa(nome, cnpjCpf, tipoPessoa, inscricaoEstadual, inscricaoMunicipal);
-      } else if (tipoInclusao == "E") {
+      } else if (tipoInclusao === "E") {
         await repository.alterarEmpresa(idEmpresa, nome, cnpjCpf, tipoPessoa, inscricaoEstadual, inscricaoMunicipal);
       }
 
       return res.json("ok");
     } catch (err) {
-      return res.json(500);
+      return res.json(err);
     }
   }
   public async excluirEmpresa(req: Request, res: Response): Promise<Response> {
@@ -59,14 +48,12 @@ class EmpresaController {
     try {
       const requisicao = req.query;
       const repository = new EmpresaRepository(conexao);
-
       let idEmpresa = parseInt(requisicao.idEmpresa as string);
-
       await repository.excluirEmpresa(idEmpresa);
 
       return res.json("ok");
     } catch (err) {
-      return res.json(500);
+      return res.json(err);
     }
   }
 }

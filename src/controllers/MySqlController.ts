@@ -9,11 +9,9 @@ class MySqlController {
       return res.status(500);
     }
     try {
-      const requisicao = req.body;
+      const { script } = req.body;
       const repository = new MySqlRepository(conexao);
-      let s_sql = requisicao.script;
-
-      let result = await repository.buscarScript(s_sql);
+      const result = await repository.buscarScript(script);
 
       return res.json(result);
     } catch (err) {

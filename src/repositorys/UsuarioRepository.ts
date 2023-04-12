@@ -1,3 +1,4 @@
+import util from "util";
 export class UsuarioRepository {
   public conn;
   constructor(conexao) {
@@ -11,20 +12,12 @@ export class UsuarioRepository {
        and senha = '${senha}'
      group by id_usuario, login`;
 
-    return new Promise((resolve, reject) => {
-      this.conn.query(s_sql, (err, rows) => {
-        err ? reject(err) : resolve(rows);
-      });
-    });
+    return await util.promisify(this.conn.query).call(this.conn, s_sql);
   }
   async buscarUsuarios() {
     let s_sql = `select id_usuario "idUsuario", login "login", senha "senha"  from tbcogusuario`;
 
-    return new Promise((resolve, reject) => {
-      this.conn.query(s_sql, (err, rows) => {
-        err ? reject(err) : resolve(rows);
-      });
-    });
+    return await util.promisify(this.conn.query).call(this.conn, s_sql);
   }
   async buscarEmpresasUsuario(idUsuario: number) {
     let s_sql = `
@@ -36,11 +29,7 @@ export class UsuarioRepository {
      where a.id_usuario = ${idUsuario}
        and b.id_empresa = a.id_empresa`;
 
-    return new Promise((resolve, reject) => {
-      this.conn.query(s_sql, (err, rows) => {
-        err ? reject(err) : resolve(rows);
-      });
-    });
+    return await util.promisify(this.conn.query).call(this.conn, s_sql);
   }
 
   async inserirUsuario(login: string, senha: string) {
@@ -56,11 +45,7 @@ export class UsuarioRepository {
       , '${senha}'
       )`;
 
-    return new Promise((resolve, reject) => {
-      this.conn.query(s_sql, (err, rows) => {
-        err ? reject(err) : resolve(rows);
-      });
-    });
+    return await util.promisify(this.conn.query).call(this.conn, s_sql);
   }
   async alterarUsuario(idUsuario: number, login: string, senha: string) {
     let s_sql = `
@@ -69,22 +54,14 @@ export class UsuarioRepository {
          , senha = '${senha}'
      where id_usuario = ${idUsuario}`;
 
-    return new Promise((resolve, reject) => {
-      this.conn.query(s_sql, (err, rows) => {
-        err ? reject(err) : resolve(rows);
-      });
-    });
+    return await util.promisify(this.conn.query).call(this.conn, s_sql);
   }
   async excluirUsuario(idUsuario: number) {
     let s_sql = `
     delete from tbcogusuario
      where id_usuario = ${idUsuario}`;
 
-    return new Promise((resolve, reject) => {
-      this.conn.query(s_sql, (err, rows) => {
-        err ? reject(err) : resolve(rows);
-      });
-    });
+    return await util.promisify(this.conn.query).call(this.conn, s_sql);
   }
 
   async inserirEmpresaUsuario(idUsuario: string, idEmpresa: string) {
@@ -100,21 +77,13 @@ export class UsuarioRepository {
       , '${idEmpresa}'
       )`;
 
-    return new Promise((resolve, reject) => {
-      this.conn.query(s_sql, (err, rows) => {
-        err ? reject(err) : resolve(rows);
-      });
-    });
+    return await util.promisify(this.conn.query).call(this.conn, s_sql);
   }
   async excluirEmpresaUsuario(idUsuarioEmpresa: number) {
     let s_sql = `
     delete from tbcogusuario_empresa
      where id_usuario_empresa = ${idUsuarioEmpresa}`;
 
-    return new Promise((resolve, reject) => {
-      this.conn.query(s_sql, (err, rows) => {
-        err ? reject(err) : resolve(rows);
-      });
-    });
+    return await util.promisify(this.conn.query).call(this.conn, s_sql);
   }
 }

@@ -12,15 +12,13 @@ class UsuarioAplicacaoController {
     try {
       const requisicao = req.query;
       const repository = new UsuarioAplicacaoRepository(conexao);
-
-      let idUsuario = parseInt(requisicao.idUsuario as string);
-      let idEmpresa = parseInt(requisicao.idEmpresa as string);
-
-      let result = await repository.buscarAplicacoesUsuario(idUsuario, idEmpresa);
+      const idUsuario = parseInt(requisicao.idUsuario as string);
+      const idEmpresa = parseInt(requisicao.idEmpresa as string);
+      const result = await repository.buscarAplicacoesUsuario(idUsuario, idEmpresa);
 
       return res.json(result);
     } catch (err) {
-      return res.json(500);
+      return res.json(err);
     }
   }
   public async salvarAplicacaoUsuario(req: Request, res: Response): Promise<Response> {
@@ -30,18 +28,13 @@ class UsuarioAplicacaoController {
       return res.status(500);
     }
     try {
-      const requisicao = req.body;
+      const { idUsuario, idEmpresa, idAplicacao } = req.body;
       const repository = new UsuarioAplicacaoRepository(conexao);
-
-      let idUsuario = requisicao.idUsuario;
-      let idEmpresa = requisicao.idEmpresa;
-      let idAplicacao = requisicao.idAplicacao;
-
       await repository.inserirAplicacaoUsuario(idUsuario, idEmpresa, idAplicacao);
 
       return res.json("ok");
     } catch (err) {
-      return res.json(500);
+      return res.json(err);
     }
   }
   public async excluirAplicacaoUsuario(req: Request, res: Response): Promise<Response> {
@@ -53,14 +46,12 @@ class UsuarioAplicacaoController {
     try {
       const requisicao = req.query;
       const repository = new UsuarioAplicacaoRepository(conexao);
-
-      let idUsuarioAplicacao = parseInt(requisicao.idUsuarioAplicacao as string);
-
+      const idUsuarioAplicacao = parseInt(requisicao.idUsuarioAplicacao as string);
       await repository.excluirAplicacaoUsuario(idUsuarioAplicacao);
 
       return res.json("ok");
     } catch (err) {
-      return res.json(500);
+      return res.json(err);
     }
   }
 }

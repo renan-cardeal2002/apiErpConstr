@@ -13,21 +13,15 @@ class UsuarioController {
       const requisicao = req.query;
       const repository = new UsuarioRepository(conexao);
 
-      let login = requisicao.login as string;
-      let senha = requisicao.senha as string;
+      const login = requisicao.login as string;
+      const senha = requisicao.senha as string;
 
-      let result: any = await repository.login(login, senha);
-      let idUsuario = result[0].idUsuario;
-      let empresas: any = await repository.buscarEmpresasUsuario(idUsuario);
+      const result: any = await repository.login(login, senha);
+      const empresas = await repository.buscarEmpresasUsuario(result[0].idUsuario);
 
-      let retorno = {
-        dadosLogin: result[0],
-        empresas: empresas,
-      };
-
-      return res.json(retorno);
+      return res.json({ dadosLogin: result[0], empresas });
     } catch (err) {
-      return res.json(500);
+      return res.json(err);
     }
   }
   public async buscarUsuarios(req: Request, res: Response): Promise<Response> {
@@ -37,14 +31,12 @@ class UsuarioController {
       return res.status(500);
     }
     try {
-      const requisicao = req.query;
       const repository = new UsuarioRepository(conexao);
-
-      let result = await repository.buscarUsuarios();
+      const result = await repository.buscarUsuarios();
 
       return res.json(result);
     } catch (err) {
-      return res.json(500);
+      return res.json(err);
     }
   }
   public async buscarEmpresasUsuario(req: Request, res: Response): Promise<Response> {
@@ -56,13 +48,12 @@ class UsuarioController {
     try {
       const requisicao = req.query;
       const repository = new UsuarioRepository(conexao);
-      let idUsuario = parseInt(requisicao.idUsuario as string);
-
-      let result = await repository.buscarEmpresasUsuario(idUsuario);
+      const idUsuario = parseInt(requisicao.idUsuario as string);
+      const result = await repository.buscarEmpresasUsuario(idUsuario);
 
       return res.json(result);
     } catch (err) {
-      return res.json(500);
+      return res.json(err);
     }
   }
   public async salvarUsuario(req: Request, res: Response): Promise<Response> {
@@ -72,23 +63,18 @@ class UsuarioController {
       return res.status(500);
     }
     try {
-      const requisicao = req.body;
+      const { idUsuario, login, senha, tipoInclusao } = req.body;
       const repository = new UsuarioRepository(conexao);
 
-      let idUsuario = requisicao.idUsuario;
-      let login = requisicao.login;
-      let senha = requisicao.senha;
-      let tipoInclusao = requisicao.tipoInclusao;
-
-      if (tipoInclusao == "I") {
+      if (tipoInclusao === "I") {
         await repository.inserirUsuario(login, senha);
-      } else if (tipoInclusao == "E") {
+      } else if (tipoInclusao === "E") {
         await repository.alterarUsuario(idUsuario, login, senha);
       }
 
       return res.json("ok");
     } catch (err) {
-      return res.json(500);
+      return res.json(err);
     }
   }
   public async excluirUsuario(req: Request, res: Response): Promise<Response> {
@@ -100,14 +86,12 @@ class UsuarioController {
     try {
       const requisicao = req.query;
       const repository = new UsuarioRepository(conexao);
-
-      let idUsuario = parseInt(requisicao.idUsuario as string);
-
+      const idUsuario = parseInt(requisicao.idUsuario as string);
       await repository.excluirUsuario(idUsuario);
 
       return res.json("ok");
     } catch (err) {
-      return res.json(500);
+      return res.json(err);
     }
   }
 
@@ -118,17 +102,13 @@ class UsuarioController {
       return res.status(500);
     }
     try {
-      const requisicao = req.body;
+      const { idUsuario, idEmpresa } = req.body;
       const repository = new UsuarioRepository(conexao);
-
-      let idUsuario = requisicao.idUsuario;
-      let idEmpresa = requisicao.idEmpresa;
-
       await repository.inserirEmpresaUsuario(idUsuario, idEmpresa);
 
       return res.json("ok");
     } catch (err) {
-      return res.json(500);
+      return res.json(err);
     }
   }
   public async excluirEmpresaUsuario(req: Request, res: Response): Promise<Response> {
@@ -140,14 +120,12 @@ class UsuarioController {
     try {
       const requisicao = req.query;
       const repository = new UsuarioRepository(conexao);
-
-      let idUsuarioEmpresa = parseInt(requisicao.idUsuarioEmpresa as string);
-
+      const idUsuarioEmpresa = parseInt(requisicao.idUsuarioEmpresa as string);
       await repository.excluirEmpresaUsuario(idUsuarioEmpresa);
 
       return res.json("ok");
     } catch (err) {
-      return res.json(500);
+      return res.json(err);
     }
   }
 }

@@ -1,10 +1,12 @@
-import express from "express";
+import express, { Application } from "express";
 import cors from "cors";
 import routes from "./routes";
-var mysql = require("mysql");
+import mysql from "mysql";
+
 class App {
-  public express: express.Application;
+  public express: Application;
   public conn: any;
+
   public constructor() {
     process.env.TZ = "America";
     this.express = express();
@@ -20,12 +22,16 @@ class App {
   }
 
   private async createConnection() {
-    this.conn = await mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "",
-      database: "erpconstr",
-    });
+    try {
+      this.conn = await mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "erpconstr",
+      });
+    } catch (err) {
+      console.error("Failed to connect to the database.", err);
+    }
   }
 
   private routes(): void {

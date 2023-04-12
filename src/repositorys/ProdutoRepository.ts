@@ -1,3 +1,4 @@
+import util from "util";
 export class ProdutoRepository {
   public conn;
   constructor(conexao) {
@@ -10,11 +11,8 @@ export class ProdutoRepository {
          , situacao "situacao"
       from tbcogproduto
      where id_empresa = ${idEmpresa}`;
-    return new Promise((resolve, reject) => {
-      this.conn.query(s_sql, (err, rows) => {
-        err ? reject(err) : resolve(rows);
-      });
-    });
+
+    return await util.promisify(this.conn.query).call(this.conn, s_sql);
   }
   async inserirProduto(idEmpresa: number, descricao: string, situacao: string) {
     let s_sql = `
@@ -30,11 +28,8 @@ export class ProdutoRepository {
       , '${descricao}'
       , '${situacao}'
       )`;
-    return new Promise((resolve, reject) => {
-      this.conn.query(s_sql, (err, rows) => {
-        err ? reject(err) : resolve(rows);
-      });
-    });
+
+    return await util.promisify(this.conn.query).call(this.conn, s_sql);
   }
   async alterarProduto(idProduto: number, idEmpresa: number, descricao: string, situacao: string) {
     let s_sql = `
@@ -43,11 +38,8 @@ export class ProdutoRepository {
          , situacao = '${situacao}'
      where id_produto = ${idProduto}
        and id_empresa = ${idEmpresa}`;
-    return new Promise((resolve, reject) => {
-      this.conn.query(s_sql, (err, rows) => {
-        err ? reject(err) : resolve(rows);
-      });
-    });
+
+    return await util.promisify(this.conn.query).call(this.conn, s_sql);
   }
   async excluirProduto(idProduto: number, idEmpresa: number) {
     let s_sql = `
@@ -55,10 +47,7 @@ export class ProdutoRepository {
       from tbcogproduto
      where id_produto = ${idProduto}
        and id_empresa = ${idEmpresa}`;
-    return new Promise((resolve, reject) => {
-      this.conn.query(s_sql, (err, rows) => {
-        err ? reject(err) : resolve(rows);
-      });
-    });
+
+    return await util.promisify(this.conn.query).call(this.conn, s_sql);
   }
 }
