@@ -15,9 +15,9 @@ class EquipeController {
       const idEmpresa = parseInt(requisicao.idEmpresa as string);
       const result = await repository.buscarEquipes(idEmpresa);
 
-      return res.json(result);
+      return res.status(200).json(result);
     } catch (err) {
-      return res.json(err);
+      return res.status(400).json(err);
     }
   }
   public async salvarEquipe(req: Request, res: Response): Promise<Response> {
@@ -36,9 +36,9 @@ class EquipeController {
         await repository.alterarEquipe(idEmpresa, idEquipe, nome);
       }
 
-      return res.json("ok");
+      return res.sendStatus(204);
     } catch (err) {
-      return res.json(err);
+      return res.status(400).json(err);
     }
   }
   public async excluirEquipe(req: Request, res: Response): Promise<Response> {
@@ -54,9 +54,9 @@ class EquipeController {
       const idEquipe = parseInt(requisicao.idEquipe as string);
       await repository.excluirEquipe(idEmpresa, idEquipe);
 
-      return res.json("ok");
+      return res.sendStatus(204);
     } catch (err) {
-      return res.json(err);
+      return res.status(400).json(err);
     }
   }
 }

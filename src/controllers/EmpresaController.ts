@@ -13,9 +13,9 @@ class EmpresaController {
       const repository = new EmpresaRepository(conexao);
       const result = await repository.buscarEmpresas();
 
-      return res.json(result);
+      return res.status(200).json(result);
     } catch (err) {
-      return res.json(err);
+      return res.status(400).json(err);
     }
   }
   public async salvarEmpresa(req: Request, res: Response): Promise<Response> {
@@ -34,9 +34,9 @@ class EmpresaController {
         await repository.alterarEmpresa(idEmpresa, nome, cnpjCpf, tipoPessoa, inscricaoEstadual, inscricaoMunicipal);
       }
 
-      return res.json("ok");
+      return res.sendStatus(204);
     } catch (err) {
-      return res.json(err);
+      return res.status(400).json(err);
     }
   }
   public async excluirEmpresa(req: Request, res: Response): Promise<Response> {
@@ -48,12 +48,12 @@ class EmpresaController {
     try {
       const requisicao = req.query;
       const repository = new EmpresaRepository(conexao);
-      let idEmpresa = parseInt(requisicao.idEmpresa as string);
+      const idEmpresa = parseInt(requisicao.idEmpresa as string);
       await repository.excluirEmpresa(idEmpresa);
 
-      return res.json("ok");
+      return res.sendStatus(204);
     } catch (err) {
-      return res.json(err);
+      return res.status(400).json(err);
     }
   }
 }

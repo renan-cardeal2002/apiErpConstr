@@ -13,10 +13,9 @@ class TiposPagamentoController {
       const repository = new TiposPagamentoRepository(conexao);
       const result = await repository.buscarTiposPagamento();
 
-      return res.json(result);
+      return res.status(200).json(result);
     } catch (err) {
-      await conexao.end();
-      return res.json(err);
+      return res.status(400).json(err);
     }
   }
   public async salvarTiposPagamento(req: Request, res: Response): Promise<Response> {
@@ -35,9 +34,9 @@ class TiposPagamentoController {
         await repository.alterarTiposPagamento(idTipoPagamento, tipoPagamento);
       }
 
-      return res.json("ok");
+      return res.sendStatus(204);
     } catch (err) {
-      return res.json(err);
+      return res.status(400).json(err);
     }
   }
   public async excluirTiposPagamento(req: Request, res: Response): Promise<Response> {
@@ -52,9 +51,9 @@ class TiposPagamentoController {
       const idTipoPagamento = requisicao.idTipoPagamento as string;
       await repository.excluirTiposPagamento(idTipoPagamento);
 
-      return res.json("ok");
+      return res.sendStatus(204);
     } catch (err) {
-      return res.json(err);
+      return res.status(400).json(err);
     }
   }
 }

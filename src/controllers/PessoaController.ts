@@ -13,9 +13,9 @@ class PessoaController {
       const repository = new PessoaRepository(conexao);
       const result = await repository.buscarPessoas();
 
-      return res.json(result);
+      return res.status(200).json(result);
     } catch (err) {
-      return res.json(err);
+      return res.status(400).json(err);
     }
   }
   public async salvarPessoa(req: Request, res: Response): Promise<Response> {
@@ -34,9 +34,9 @@ class PessoaController {
         await repository.alterarPessoa(idPessoa, idEmpresa, nome, cnpjCpf, tipoPessoa, situacao, funcionario, cliente, fornecedor, tipoFuncionario, idEquipe);
       }
 
-      return res.json("ok");
+      return res.sendStatus(204);
     } catch (err) {
-      return res.json(err);
+      return res.status(400).json(err);
     }
   }
   public async excluirPessoa(req: Request, res: Response): Promise<Response> {
@@ -51,9 +51,9 @@ class PessoaController {
       const idPessoa = parseInt(requisicao.idPessoa as string);
       await repository.excluirPessoa(idPessoa);
 
-      return res.json("ok");
+      return res.sendStatus(204);
     } catch (err) {
-      return res.json(err);
+      return res.status(400).json(err);
     }
   }
 }

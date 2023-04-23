@@ -13,9 +13,9 @@ class AplicacaoController {
       const repository = new AplicacaoRepository(conexao);
       const result = await repository.buscarAplicacoes();
 
-      return res.json(result);
+      return res.status(200).json(result);
     } catch (err) {
-      return res.json(err);
+      return res.status(400).json(err);
     }
   }
   public async salvarAplicacao(req: Request, res: Response): Promise<Response> {
@@ -34,9 +34,9 @@ class AplicacaoController {
         await repository.alterarAplicacao(idAplicacao, idSistema, nomeAplicativo, situacao);
       }
 
-      return res.json("ok");
+      return res.sendStatus(204);
     } catch (err) {
-      return res.json(err);
+      return res.status(400).json(err);
     }
   }
   public async excluirAplicacao(req: Request, res: Response): Promise<Response> {
@@ -51,9 +51,9 @@ class AplicacaoController {
       const idAplicacao = requisicao.idAplicacao as string;
       await repository.excluirAplicacao(idAplicacao);
 
-      return res.json("ok");
+      return res.sendStatus(204);
     } catch (err) {
-      return res.json(err);
+      return res.status(400).json(err);
     }
   }
 }

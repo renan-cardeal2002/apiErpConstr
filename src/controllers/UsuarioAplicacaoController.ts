@@ -16,9 +16,9 @@ class UsuarioAplicacaoController {
       const idEmpresa = parseInt(requisicao.idEmpresa as string);
       const result = await repository.buscarAplicacoesUsuario(idUsuario, idEmpresa);
 
-      return res.json(result);
+      return res.status(200).json(result);
     } catch (err) {
-      return res.json(err);
+      return res.status(400).json(err);
     }
   }
   public async salvarAplicacaoUsuario(req: Request, res: Response): Promise<Response> {
@@ -32,9 +32,9 @@ class UsuarioAplicacaoController {
       const repository = new UsuarioAplicacaoRepository(conexao);
       await repository.inserirAplicacaoUsuario(idUsuario, idEmpresa, idAplicacao);
 
-      return res.json("ok");
+      return res.sendStatus(204);
     } catch (err) {
-      return res.json(err);
+      return res.status(400).json(err);
     }
   }
   public async excluirAplicacaoUsuario(req: Request, res: Response): Promise<Response> {
@@ -49,9 +49,9 @@ class UsuarioAplicacaoController {
       const idUsuarioAplicacao = parseInt(requisicao.idUsuarioAplicacao as string);
       await repository.excluirAplicacaoUsuario(idUsuarioAplicacao);
 
-      return res.json("ok");
+      return res.sendStatus(204);
     } catch (err) {
-      return res.json(err);
+      return res.status(400).json(err);
     }
   }
 }

@@ -15,9 +15,9 @@ class ProdutoController {
       const idEmpresa = parseInt(requisicao.idEmpresa as string);
       const result = await repository.buscarProdutos(idEmpresa);
 
-      return res.json(result);
+      return res.status(200).json(result);
     } catch (err) {
-      return res.json(err);
+      return res.status(400).json(err);
     }
   }
   public async salvarProduto(req: Request, res: Response): Promise<Response> {
@@ -36,9 +36,9 @@ class ProdutoController {
         await repository.alterarProduto(idProduto, idEmpresa, descricao, situacao);
       }
 
-      return res.json("ok");
+      return res.sendStatus(204);
     } catch (err) {
-      return res.json(err);
+      return res.status(400).json(err);
     }
   }
   public async excluirProduto(req: Request, res: Response): Promise<Response> {
@@ -54,9 +54,9 @@ class ProdutoController {
       const idEmpresa = parseInt(requisicao.idEmpresa as string);
       await repository.excluirProduto(idProduto, idEmpresa);
 
-      return res.json("ok");
+      return res.sendStatus(204);
     } catch (err) {
-      return res.json(err);
+      return res.status(400).json(err);
     }
   }
 }

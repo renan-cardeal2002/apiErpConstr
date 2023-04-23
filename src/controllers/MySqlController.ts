@@ -13,9 +13,9 @@ class MySqlController {
       const repository = new MySqlRepository(conexao);
       const result = await repository.buscarScript(script);
 
-      return res.json(result);
+      return res.status(200).json(result);
     } catch (err) {
-      return res.json(500);
+      return res.status(400).json(err);
     }
   }
 }
