@@ -60,7 +60,7 @@ class UsuarioController {
   public async excluirUsuario(req: Request, res: Response): Promise<Response> {
     try {
       const requisicao = req.query;
-      const idUsuario = parseInt(requisicao.idUsuario as string);
+      const idUsuario = requisicao.idUsuario as string;
       await usuarioService.remove(idUsuario);
 
       return res.sendStatus(204);

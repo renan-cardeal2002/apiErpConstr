@@ -12,7 +12,6 @@ class ProductService {
   }
 
   async find(login, senha) {
-    console.log(login, senha);
     const find = await usuarioSchema.find({ login, senha });
     return find;
   }
