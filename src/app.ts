@@ -2,7 +2,7 @@ import express, { Application } from "express";
 import cors from "cors";
 import routes from "./routes";
 import mysql from "mysql";
-
+import mongoose from "mongoose";
 class App {
   public express: Application;
   public conn: any;
@@ -14,6 +14,7 @@ class App {
     this.middlewares();
     this.routes();
     this.createConnection();
+    this.database();
   }
 
   private middlewares(): void {
@@ -31,6 +32,16 @@ class App {
       });
     } catch (err) {
       console.error("Failed to connect to the database.", err);
+    }
+  }
+
+  private async database() {
+    try {
+      mongoose.set("strictQuery", true);
+      await mongoose.connect("mongodb://0.0.0.0:27017/nest");
+      console.log("Connect database success");
+    } catch (err) {
+      console.error("Connect database fail, error: ", err);
     }
   }
 

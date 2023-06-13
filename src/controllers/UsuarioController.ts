@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { UsuarioRepository } from "../repositorys/UsuarioRepository";
 import Conexao from "./../conexao/Conexao";
-import erros from "../services/TratarErroService";
+// import erros from "../services/TratarErroService";
+import usuarioService from "../services/usuario.service";
 class UsuarioController {
   public async login(req: Request, res: Response): Promise<Response> {
     try {
@@ -26,15 +27,9 @@ class UsuarioController {
   }
   public async buscarUsuarios(req: Request, res: Response): Promise<Response> {
     try {
-      var conexao: any = await Conexao.connectDb();
-    } catch (err) {
-      return res.status(500);
-    }
-    try {
-      const repository = new UsuarioRepository(conexao);
-      const result = await repository.buscarUsuarios();
+      const mongoResult = await usuarioService.list();
 
-      return res.status(200).json(result);
+      return res.status(200).json(mongoResult);
     } catch (err) {
       return res.status(400).json(err);
     }
@@ -56,40 +51,25 @@ class UsuarioController {
       return res.status(400).json(err);
     }
   }
-  public async salvarUsuario({ body: { idUsuario, login, senha, tipoInclusao } }: Request, res: Response): Promise<Response> {
-    let conexao;
-
-    try {
-      conexao = await Conexao.connectDb();
-    } catch (err) {
-      return res.status(500).json({ message: erros.tratarErro(500) });
-    }
-
-    const repository = new UsuarioRepository(conexao);
-
+  public async salvarUsuario({ body: { idUsuario, login, senha, tipoInclusao, empresas, aplicacoes } }: Request, res: Response) {
     try {
       if (tipoInclusao === "I") {
-        await repository.inserirUsuario(login, senha);
+        await usuarioService.create({ login, senha });
       } else if (tipoInclusao === "E") {
-        await repository.alterarUsuario(idUsuario, login, senha);
+        await usuarioService.update(idUsuario, { login, senha, empresas, aplicacoes });
       }
 
       return res.sendStatus(204);
     } catch (err) {
+      console.error(err.message);
       return res.status(400).json({ message: err.message });
     }
   }
   public async excluirUsuario(req: Request, res: Response): Promise<Response> {
     try {
-      var conexao: any = await Conexao.connectDb();
-    } catch (err) {
-      return res.status(500);
-    }
-    try {
       const requisicao = req.query;
-      const repository = new UsuarioRepository(conexao);
       const idUsuario = parseInt(requisicao.idUsuario as string);
-      await repository.excluirUsuario(idUsuario);
+      await usuarioService.remove(idUsuario);
 
       return res.sendStatus(204);
     } catch (err) {

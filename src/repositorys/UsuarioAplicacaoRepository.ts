@@ -16,8 +16,13 @@ export class UsuarioAplicacaoRepository {
          , b.nome_aplicativo "nomeAplicativo"
          , b.situacao "situacao"
       from tbcogusuario_aplicacao a, tbcogaplicacao b
-     where a.id_usuario = ${idUsuario}
-       and a.id_empresa = ${idEmpresa}
+     where a.id_usuario = ${idUsuario}`;
+
+    if (idEmpresa)
+      s_sql += `
+       and a.id_empresa = ${idEmpresa}`;
+
+    s_sql += `
        and b.id_aplicacao = a.id_aplicacao
      order by b.id_sistema, a.id_aplicacao`;
 
@@ -37,6 +42,8 @@ export class UsuarioAplicacaoRepository {
       , '${idAplicacao}'
       , '${idEmpresa}'
       )`;
+
+    console.log(s_sql);
 
     return await util.promisify(this.conn.query).call(this.conn, s_sql);
   }
