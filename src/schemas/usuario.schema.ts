@@ -10,6 +10,14 @@ const UsuarioSchema = new Schema(
       required: true,
       type: String,
     },
+    empresas: {
+      required: false,
+      type: Array,
+    },
+    aplicacoes: {
+      required: false,
+      type: Array,
+    },
   },
   {
     timestamps: true,

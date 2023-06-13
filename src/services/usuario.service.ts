@@ -11,14 +11,14 @@ class ProductService {
     return list;
   }
 
-  async find(id) {
-    const find = await usuarioSchema.findById(id);
+  async find(login, senha) {
+    console.log(login, senha);
+    const find = await usuarioSchema.find({ login, senha });
     return find;
   }
 
   async update(id, data) {
     const find = await usuarioSchema.findByIdAndUpdate(id, data);
-    console.log(find, "alterou");
     return find;
   }
 

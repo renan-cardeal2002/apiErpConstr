@@ -6,21 +6,13 @@ import usuarioService from "../services/usuario.service";
 class UsuarioController {
   public async login(req: Request, res: Response): Promise<Response> {
     try {
-      var conexao: any = await Conexao.connectDb();
-    } catch (err) {
-      return res.status(500);
-    }
-    try {
       const requisicao = req.query;
-      const repository = new UsuarioRepository(conexao);
-
       const login = requisicao.login as string;
       const senha = requisicao.senha as string;
 
-      const result: any = await repository.login(login, senha);
-      const empresas = await repository.buscarEmpresasUsuario(result[0].idUsuario);
+      const result: any = await usuarioService.find(login, senha);
 
-      return res.status(200).json({ dadosLogin: result[0], empresas });
+      return res.status(200).json({ dadosLogin: result[0], empresas: result[0].empresas });
     } catch (err) {
       return res.status(400).json(err);
     }
@@ -54,7 +46,7 @@ class UsuarioController {
   public async salvarUsuario({ body: { idUsuario, login, senha, tipoInclusao, empresas, aplicacoes } }: Request, res: Response) {
     try {
       if (tipoInclusao === "I") {
-        await usuarioService.create({ login, senha });
+        await usuarioService.create({ login, senha, empresas, aplicacoes });
       } else if (tipoInclusao === "E") {
         await usuarioService.update(idUsuario, { login, senha, empresas, aplicacoes });
       }
